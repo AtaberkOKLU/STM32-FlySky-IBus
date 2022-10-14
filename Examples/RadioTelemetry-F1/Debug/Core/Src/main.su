@@ -1,0 +1,5 @@
+../Drivers/CMSIS/Include/core_cm3.h:1876:26:ITM_SendChar	16	static,ignoring_inline_asm
+../Core/Src/main.c:84:5:main	16	static
+../Core/Src/main.c:138:6:SystemClock_Config	72	static
+../Core/Src/main.c:176:5:__io_putchar	16	static
+../Core/Src/main.c:188:6:Error_Handler	4	static,ignoring_inline_asm
