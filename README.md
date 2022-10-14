@@ -10,6 +10,14 @@
 - 	Each Servo and Sensor iBus requires one U(S)ART peripheral (Half-Dublex)
 - 	Every transmission and reception is handled by state machine guided DMA operations, minimazing CPU load
 
+# Documents
+
+## System Diagram
+See [System Diagram](https://github.com/AtaberkOKLU/STM32-RadioTelemetry-FlySky-FS-i6x/blob/main/Documents/System/RadioTelemetry_System.drawio.pdf)
+
+## Logic Analyzer Capture
+See [Logic Analyzer Capture File](https://github.com/AtaberkOKLU/STM32-RadioTelemetry-FlySky-FS-i6x/tree/main/Documents/LogicAnalyzer)
+
 # Example Project
 
 SMT32F103C8T6 Based Example Project
@@ -19,30 +27,30 @@ SMT32F103C8T6 Based Example Project
  - USART2 (iBus - Servo) (Half-Dublex)
  - Prints Servo Channels over SWO ITM
  
-## SystemCore
+1. SystemCore
 
-### RCC
+1.1. RCC
 - HSE -> Crystal / Ceramic Resonator
 
-### SYS
+1.2. SYS
 - Debug -> Trace Asynchronous SW
 - Timebase Source -> SysTick
 
-## Connectivity
+2. Connectivity
 
-### USART1 (iBus - Sensor)
+2.1 USART1 (iBus - Sensor)
 - Mode -> Single Wire (Half-Dublex) (Transfer and Receive)
 - BoudRate -> 115200 (8N1)
 - DMA_RX -> Enabled
 - DMA_TX -> Enabled
 - NVIC -> USART1 Global Interrupt Enabled
 
-### USART2 (iBus - Servo)
+2.2 USART2 (iBus - Servo)
 - Mode -> Single Wire (Half-Dublex) (Only Receive)
 - BoudRate -> 115200 (8N1)
 - DMA_RX -> Enabled
 
-## Project Manager -> Advanced Settings
+3. Project Manager -> Advanced Settings
 - Register CallBacks -> UART -> Enabled
 
 # Step-by-step Implimentation
