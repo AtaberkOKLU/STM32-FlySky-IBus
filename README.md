@@ -49,7 +49,7 @@ SMT32F103C8T6 Based Example Project
 
 1. [OpenI6x Software for FlySky - i6x](https://github.com/OpenI6X/opentx)
 2. Configure Microcontroller Peripherals according to Example Project
-3. Copy 'Telemetry.c/.h' Files to Inc and Src Folders
-4. Add '\*\*\*_UART_Telemetry_Init(&huart)' Functions in 'USER_CODE_2' Field
-5. Add Global 'TelemetrySensorStruct SensorList\[NUM_SENSOR\]' Array According to [iBus Sensor Types](https://github.com/betaflight/betaflight/blob/master/src/main/telemetry/ibus_shared.h)
-6. Edit 'NUM_SENSOR' @ 'Telemetry.h' File 
+3. Copy `Telemetry.c/.h` Files to Inc and Src Folders
+4. Add `\*\*\*_UART_Telemetry_Init(&huart)` Functions in `USER_CODE_2` Field
+5. Add Global `TelemetrySensorStruct SensorList\[NUM_SENSOR\]` Array According to [iBus Sensor Types](https://github.com/betaflight/betaflight/blob/master/src/main/telemetry/ibus_shared.h)
+6. Edit `NUM_SENSOR` @ `Telemetry.h` File 
