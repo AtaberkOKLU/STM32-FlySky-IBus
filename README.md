@@ -29,28 +29,28 @@ SMT32F103C8T6 Based Example Project
  
 1. SystemCore
 
-	1.1. RCC
+1.1. RCC
 - HSE -> Crystal / Ceramic Resonator
 
-	1.2. SYS
+1.2. SYS
 - Debug -> Trace Asynchronous SW
 - Timebase Source -> SysTick
 
 2. Connectivity
 
-	2.1 USART1 (iBus - Sensor)
+2.1 USART1 (iBus - Sensor)
 - Mode -> Single Wire (Half-Dublex) (Transfer and Receive)
 - BoudRate -> 115200 (8N1)
 - DMA_RX -> Enabled
 - DMA_TX -> Enabled
 - NVIC -> USART1 Global Interrupt Enabled
 
-	2.2 USART2 (iBus - Servo)
+2.2 USART2 (iBus - Servo)
 - Mode -> Single Wire (Half-Dublex) (Only Receive)
 - BoudRate -> 115200 (8N1)
 - DMA_RX -> Enabled
 
-	3. Project Manager -> Advanced Settings
+3. Project Manager -> Advanced Settings
 - Register CallBacks -> UART -> Enabled
 
 # Step-by-step Implimentation
