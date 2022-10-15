@@ -48,7 +48,7 @@ void Sensor_UART_Error_Callback(struct __UART_HandleTypeDef *huart){
 	HAL_UART_MspDeInit(huart);
 	HAL_UART_MspInit(huart);
 
-	printf("USART1 error %ld DMA RX/TX error 0x%lx-0x%lx \r\n", HAL_UART_GetError(huart), HAL_DMA_GetError(&hdma_usart1_rx), HAL_DMA_GetError(&hdma_usart1_tx));
+	printf("Sensor UART Error %ld DMA RX/TX error 0x%lx-0x%lx \r\n", HAL_UART_GetError(huart), HAL_DMA_GetError(&hdma_usart1_rx), HAL_DMA_GetError(&hdma_usart1_tx));
 	FLAGS.Transiever_RX_Sync = 0;
 	while(HAL_UART_Receive_DMA(huart, (uint8_t*) &Transiever_RX_Buffer[0], 1) != HAL_OK);
 }
@@ -58,7 +58,7 @@ void Servo_UART_Error_Callback(struct __UART_HandleTypeDef *huart){
 	HAL_UART_DMAStop(huart);
 	HAL_UART_MspDeInit(huart);
 	HAL_UART_MspInit(huart);
-	printf("USART2 error %ld DMA error 0x%lx \r\n", HAL_UART_GetError(huart), HAL_DMA_GetError(&hdma_usart2_rx));
+	printf("Servo UART Error %ld DMA error 0x%lx \r\n", HAL_UART_GetError(huart), HAL_DMA_GetError(&hdma_usart2_rx));
 	FLAGS.TELEMETRY_SYNC_STATES = TELEMETRY_SYNC_SYNC0;
 	while(HAL_UART_Receive_DMA(huart, (uint8_t*) &Transiever_TX_Buffer[0], 1) != HAL_OK);
 }
