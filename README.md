@@ -11,9 +11,9 @@
 - 	Every transmission and reception is handled by state machine guided DMA operations, minimazing CPU load
 
 # Documentation
-+ [System Diagram](https://github.com/AtaberkOKLU/STM32-RadioTelemetry-FlySky-FS-i6x/blob/main/Documents/System/RadioTelemetry_System.drawio.pdf)
-+ [Logic Analyzer Capture File](https://github.com/AtaberkOKLU/STM32-RadioTelemetry-FlySky-FS-i6x/tree/main/Documents/LogicAnalyzer)
-+ [FS-i6x Telemetry Screens](https://github.com/AtaberkOKLU/STM32-RadioTelemetry-FlySky-FS-i6x/tree/main/Documents/FlySky-i6x)
++ [System Diagram](https://AtaberkOKLU.github.io/STM32-RadioTelemetry-FlySky-FS-i6x/blob/main/Documents/System/RadioTelemetry_System.drawio.pdf)
++ [Logic Analyzer Capture File](https://AtaberkOKLU.github.io/STM32-RadioTelemetry-FlySky-FS-i6x/tree/main/Documents/LogicAnalyzer)
++ [FS-i6x Telemetry Screens](https://AtaberkOKLU.github.io/STM32-RadioTelemetry-FlySky-FS-i6x/tree/main/Documents/FlySky-i6x)
 
 # Example Project
 
