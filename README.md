@@ -12,8 +12,8 @@
 
 # Documentation
 + [System Diagram](https://AtaberkOKLU.github.io/STM32-RadioTelemetry-FlySky-FS-i6x/Documents/System/RadioTelemetry_System.drawio.pdf)
-+ [Logic Analyzer Capture File](https://AtaberkOKLU.github.io/STM32-RadioTelemetry-FlySky-FS-i6x/Documents/LogicAnalyzer)
-+ [FS-i6x Telemetry Screens](https://AtaberkOKLU.github.io/STM32-RadioTelemetry-FlySky-FS-i6x/Documents/FlySky-i6x)
++ [Logic Analyzer Capture File](https://github.com/AtaberkOKLU/STM32-RadioTelemetry-FlySky-FS-i6x/tree/main/Documents/LogicAnalyzer)
++ [FS-i6x Telemetry Screens](https://github.com/AtaberkOKLU/STM32-RadioTelemetry-FlySky-FS-i6x/tree/main/Documents/FlySky-i6x)
 
 # Example Project
 
