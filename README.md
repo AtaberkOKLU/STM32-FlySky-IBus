@@ -23,7 +23,15 @@ SMT32F103C8T6 Based Example Project
  - USART1 (iBus - Sensor) (Half-Dublex)
  - USART2 (iBus - Servo) (Half-Dublex)
  - Prints Servo Channels over SWO ITM
- 
+
+<p align="center">
+	<picture>
+		<source media="(prefers-color-scheme: dark)" srcset="https://AtaberkOKLU.github.io/STM32-RadioTelemetry-FlySky-FS-i6x/Documents/System/RadioTelemetry_System.dark.drawio.png">
+		<source media="(prefers-color-scheme: light)" srcset="https://AtaberkOKLU.github.io/STM32-RadioTelemetry-FlySky-FS-i6x/Documents/System/RadioTelemetry_System.drawio.png">
+		<img alt="FlowCharts" src="https://AtaberkOKLU.github.io/STM32-RadioTelemetry-FlySky-FS-i6x/Documents/System/RadioTelemetry_System.drawio.png">
+	</picture>
+</p>
+
 ## SystemCore
 
 ### RCC
