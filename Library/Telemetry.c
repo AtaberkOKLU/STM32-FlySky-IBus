@@ -116,22 +116,13 @@ void Sensor_UART_RxComplete_Callback(struct __UART_HandleTypeDef *huart){
 				chksum = TELM_CHECKSUM_CONST - SIZE;
 				TX_Buffer[1] = t = Transiever_RX_Buffer[1];
 				chksum -= t;
-				TX_Buffer[2] = t = (uint8_t) (SensorList[CHNL-1].SensorMeas);
-				chksum -= t;
-				TX_Buffer[3] = t = (uint8_t) (SensorList[CHNL-1].SensorMeas >> 8);
-				chksum -= t;
-				if(SIZE == SENSOR_TX_BUF_SIZE_6) {
-					TX_Buffer[4] = chksum;
-					TX_Buffer[5] = chksum >> 8;
-				} else {
-					TX_Buffer[4] = t = (uint8_t) (SensorList[CHNL-1].SensorMeas >> 16);
+				for (i = 2; i < SIZE - 2; i++) {
+					TX_Buffer[i] = t = (uint8_t) (SensorList[CHNL-1].SensorMeas >> 8*(i-2));
 					chksum -= t;
-					TX_Buffer[5] = t = (uint8_t) (SensorList[CHNL-1].SensorMeas >> 24);
-					chksum -= t;
-
-					TX_Buffer[6] = chksum;
-					TX_Buffer[7] = chksum >> 8;
 				}
+				TX_Buffer[i++] = chksum;
+				TX_Buffer[i  ] = chksum >> 8;
+
 				break;
 
 			default:
