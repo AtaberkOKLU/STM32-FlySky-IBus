@@ -4,8 +4,8 @@
 - FS-iA#B AFHDS2A (# : 6 or 10)
 
 # Features
--	Can receive 14 Channels of the FlySky FS - i6x
--	Can send up to 14 sensor measurements 
+-	Can receive 16 Channels of the FlySky FS - i6x
+-	Can send up to 16 sensor measurements 
 - 	Only iBus ports are used, minimazing the pin usage
 - 	Each Servo and Sensor iBus requires one U(S)ART peripheral (Half-Dublex)
 - 	Every transmission and reception is handled by state machine guided DMA operations, minimazing CPU load
@@ -18,8 +18,8 @@
 # Example Project
 
 SMT32F103C8T6 Based Example Project
- - 14 Channel Servo Reception (DMA)
- - 14 Channel Sensor Transmission (DMA)
+ - 16 Channel Servo Reception (DMA)
+ - 16 Channel Sensor Transmission (DMA)
  - USART1 (iBus - Sensor) (Half-Dublex)
  - USART2 (iBus - Servo) (Half-Dublex)
  - Prints Servo Channels over SWO ITM
