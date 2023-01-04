@@ -9,12 +9,6 @@
 
 #include <Telemetry.h>
 
-extern UART_HandleTypeDef huart1;
-extern UART_HandleTypeDef huart2;
-extern DMA_HandleTypeDef hdma_usart1_rx;
-extern DMA_HandleTypeDef hdma_usart1_tx;
-extern DMA_HandleTypeDef hdma_usart2_rx;
-
 // Transiever Variables
 volatile uint8_t Transiever_RX_Buffer[SENSOR_BUFFER_SIZE];
 volatile uint8_t TX_Buffer[SENSOR_TX_BUF_SIZE_8] = {0};
@@ -48,7 +42,7 @@ void Sensor_UART_Error_Callback(struct __UART_HandleTypeDef *huart){
 	HAL_UART_MspDeInit(huart);
 	HAL_UART_MspInit(huart);
 
-	printf("Sensor UART Error %ld DMA RX/TX error 0x%lx-0x%lx \r\n", HAL_UART_GetError(huart), HAL_DMA_GetError(&hdma_usart1_rx), HAL_DMA_GetError(&hdma_usart1_tx));
+	printf("Sensor UART Error %ld DMA RX/TX error 0x%lx-0x%lx \r\n", HAL_UART_GetError(huart), HAL_DMA_GetError(huart->hdmarx), HAL_DMA_GetError(huart->hdmatx));
 	FLAGS.Transiever_RX_Sync = 0;
 	while(HAL_UART_Receive_DMA(huart, (uint8_t*) &Transiever_RX_Buffer[0], 1) != HAL_OK);
 }
@@ -58,7 +52,7 @@ void Servo_UART_Error_Callback(struct __UART_HandleTypeDef *huart){
 	HAL_UART_DMAStop(huart);
 	HAL_UART_MspDeInit(huart);
 	HAL_UART_MspInit(huart);
-	printf("Servo UART Error %ld DMA error 0x%lx \r\n", HAL_UART_GetError(huart), HAL_DMA_GetError(&hdma_usart2_rx));
+	printf("Servo UART Error %ld DMA error 0x%lx \r\n", HAL_UART_GetError(huart), HAL_DMA_GetError(huart->hdmarx));
 	FLAGS.TELEMETRY_SYNC_STATES = TELEMETRY_SYNC_SYNC0;
 	while(HAL_UART_Receive_DMA(huart, (uint8_t*) &Transiever_TX_Buffer[0], 1) != HAL_OK);
 }
@@ -69,17 +63,17 @@ void Sensor_UART_RxComplete_Callback(struct __UART_HandleTypeDef *huart){
 	if(!FLAGS.Transiever_RX_Sync) {
 		FLAGS.Transiever_RX_Sync = Transiever_RX_Buffer[0] == SENSOR_HEADER;
 		if(!FLAGS.Transiever_RX_Sync) {
-			while(HAL_UART_Receive_DMA(&huart1, (uint8_t *) &Transiever_RX_Buffer[0], 1) != HAL_OK);
+			while(HAL_UART_Receive_DMA(huart, (uint8_t *) &Transiever_RX_Buffer[0], 1) != HAL_OK);
 		} else {
 			Transiever_RX_Buffer[0] = SENSOR_HEADER;
-			while(HAL_UART_Receive_DMA(&huart1, (uint8_t *) &Transiever_RX_Buffer[1], 3) != HAL_OK);
+			while(HAL_UART_Receive_DMA(huart, (uint8_t *) &Transiever_RX_Buffer[1], 3) != HAL_OK);
 		}
 		return;
 	} else {
 
 		FLAGS.Transiever_RX_Sync = Transiever_RX_Buffer[0] == SENSOR_HEADER;
 		if(!FLAGS.Transiever_RX_Sync) {
-			while(HAL_UART_Receive_DMA(&huart1, (uint8_t *) &Transiever_RX_Buffer[0], 1) != HAL_OK);
+			while(HAL_UART_Receive_DMA(huart, (uint8_t *) &Transiever_RX_Buffer[0], 1) != HAL_OK);
 			return;
 		}
 
@@ -90,7 +84,7 @@ void Sensor_UART_RxComplete_Callback(struct __UART_HandleTypeDef *huart){
 		if((CHNL <= NUM_SENSORS) && (CHNL > 0)) {
 			SIZE = (SensorList[CHNL-1].SensorType & 0x80) ? SENSOR_TX_BUF_SIZE_8 : SENSOR_TX_BUF_SIZE_6;
 		} else {
-			while(HAL_UART_Receive_DMA(&huart1, (uint8_t *) Transiever_RX_Buffer, SENSOR_BUFFER_SIZE) != HAL_OK);
+			while(HAL_UART_Receive_DMA(huart, (uint8_t *) Transiever_RX_Buffer, SENSOR_BUFFER_SIZE) != HAL_OK);
 			return;
 		}
 
@@ -127,19 +121,19 @@ void Sensor_UART_RxComplete_Callback(struct __UART_HandleTypeDef *huart){
 				break;
 
 			default:
-				while(HAL_UART_Receive_DMA(&huart1, (uint8_t *) Transiever_RX_Buffer, SENSOR_BUFFER_SIZE) != HAL_OK);
+				while(HAL_UART_Receive_DMA(huart, (uint8_t *) Transiever_RX_Buffer, SENSOR_BUFFER_SIZE) != HAL_OK);
 				return;
 		}
 
-			while(HAL_HalfDuplex_EnableTransmitter(&huart1) != HAL_OK);
-			while(HAL_UART_Transmit_DMA(&huart1, (uint8_t *) TX_Buffer, TX_Buffer[0]) != HAL_OK);
+			while(HAL_HalfDuplex_EnableTransmitter(huart) != HAL_OK);
+			while(HAL_UART_Transmit_DMA(huart, (uint8_t *) TX_Buffer, TX_Buffer[0]) != HAL_OK);
 			return;
 	}
 }
 
 void Sensor_UART_TxComplete_Callback(struct __UART_HandleTypeDef *huart){
-	while(HAL_HalfDuplex_EnableReceiver(&huart1) != HAL_OK);
-	while(HAL_UART_Receive_DMA(&huart1, (uint8_t*) Transiever_RX_Buffer, SENSOR_BUFFER_SIZE) != HAL_OK);
+	while(HAL_HalfDuplex_EnableReceiver(huart) != HAL_OK);
+	while(HAL_UART_Receive_DMA(huart, (uint8_t*) Transiever_RX_Buffer, SENSOR_BUFFER_SIZE) != HAL_OK);
 }
 
 void Servo_UART_RxComplete_Callback(struct __UART_HandleTypeDef *huart){
@@ -150,23 +144,23 @@ void Servo_UART_RxComplete_Callback(struct __UART_HandleTypeDef *huart){
 			if(Transiever_TX_Buffer[0] == SERVO_HEADER_1) {
 				FLAGS.TELEMETRY_SYNC_STATES = TELEMETRY_SYNC_SYNC1;
 			}
-			HAL_UART_Receive_DMA(&huart2, (uint8_t *) &Transiever_TX_Buffer[1], 1);
+			HAL_UART_Receive_DMA(huart, (uint8_t *) &Transiever_TX_Buffer[1], 1);
 			break;
 
 		case TELEMETRY_SYNC_SYNC1:
 			if(Transiever_TX_Buffer[1] == SERVO_HEADER_2) {
 				FLAGS.TELEMETRY_SYNC_STATES = TELEMETRY_SYNC_SYNCED;
-				HAL_UART_Receive_DMA(&huart2, (uint8_t *) &Transiever_TX_Buffer[2], SERVO_BUFFER_SIZE-2);
+				HAL_UART_Receive_DMA(huart, (uint8_t *) &Transiever_TX_Buffer[2], SERVO_BUFFER_SIZE-2);
 			} else {
 				FLAGS.TELEMETRY_SYNC_STATES = TELEMETRY_SYNC_SYNC0;
-				HAL_UART_Receive_DMA(&huart2, (uint8_t *) &Transiever_TX_Buffer[0], 1);
+				HAL_UART_Receive_DMA(huart, (uint8_t *) &Transiever_TX_Buffer[0], 1);
 			}
 			break;
 
 		case TELEMETRY_SYNC_VERIFIED:
 			if((Transiever_TX_Buffer[0] != SERVO_HEADER_1) || (Transiever_TX_Buffer[1] != SERVO_HEADER_2)) {
 				FLAGS.TELEMETRY_SYNC_STATES = TELEMETRY_SYNC_SYNC0;
-				HAL_UART_Receive_DMA(&huart2, (uint8_t *) &Transiever_TX_Buffer[0], 1);
+				HAL_UART_Receive_DMA(huart, (uint8_t *) &Transiever_TX_Buffer[0], 1);
 				break;
 			}
 		case TELEMETRY_SYNC_SYNCED:
@@ -180,10 +174,10 @@ void Servo_UART_RxComplete_Callback(struct __UART_HandleTypeDef *huart){
 				memcpy(&ServoList, (uint8_t *) Transiever_TX_Buffer, SERVO_BUFFER_SIZE);
 				FLAGS.FAIL_SAFE = (ServoList.Channel_11 > 1975);
 				FLAGS.TELEMETRY_SYNC_STATES = TELEMETRY_SYNC_VERIFIED;
-				HAL_UART_Receive_DMA(&huart2, (uint8_t *) &Transiever_TX_Buffer[0], SERVO_BUFFER_SIZE);
+				HAL_UART_Receive_DMA(huart, (uint8_t *) &Transiever_TX_Buffer[0], SERVO_BUFFER_SIZE);
 			} else {
 				FLAGS.TELEMETRY_SYNC_STATES = TELEMETRY_SYNC_SYNC0;
-				HAL_UART_Receive_DMA(&huart2, (uint8_t *) &Transiever_TX_Buffer[0], 1);
+				HAL_UART_Receive_DMA(huart, (uint8_t *) &Transiever_TX_Buffer[0], 1);
 			}
 			break;
 	}

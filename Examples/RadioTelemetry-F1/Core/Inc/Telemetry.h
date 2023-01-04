@@ -9,7 +9,7 @@ extern "C" {
 #include <string.h>
 #include <stdio.h>
 
-#define NUM_SENSORS 14
+#define NUM_SENSORS 15
 
 #define USE_HAL_USE_HAL_UART_REGISTER_CALLBACKS 1U
 
