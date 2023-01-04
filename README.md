@@ -58,6 +58,9 @@ SMT32F103C8T6 Based Example Project
 ## Project Manager -> Advanced Settings
 - Register CallBacks -> UART -> Enabled
 
+## Project Manager -> Code Generator
+- Generate peripheral initilazation as pair of .c/.h files per peripheral -> Enabled
+
 # Step-by-step Implimentation
 
 1. [OpenI6x Software for FlySky - i6x](https://github.com/OpenI6X/opentx)
